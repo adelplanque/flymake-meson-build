@@ -116,9 +116,9 @@ file.  Does nothing if the file does not appear to be part of a meson project."
   (with-current-buffer buf
     (unless flymake-meson-build-topsrcdir
       (setq flymake-meson-build-topsrcdir (flymake-meson-build--topsrcdir)))
-    (unless flymake-meson-build-topsrcdir
-      (user-error "Cannot determine root directory for a meson project"))
-    (set (make-local-variable 'flymake-cc-command) #'flymake-meson-build--cc-command)))
+    (if flymake-meson-build-topsrcdir
+        (set (make-local-variable 'flymake-cc-command) #'flymake-meson-build--cc-command)
+      (message "Cannot determine root directory for a meson project"))))
 
 (provide 'flymake-meson-build)
 ;;; flymake-meson-build.el ends here
